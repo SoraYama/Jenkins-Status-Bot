@@ -6,6 +6,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import _ from 'lodash'
 import qs from 'querystring'
+import moment from 'moment'
 
 const logger = log4js.getLogger('index')
 
@@ -28,7 +29,7 @@ app.use(async (ctx, next) => {
 })
 
 app.use(async (ctx, next) => {
-  const validated = validate(ctx.querystring, ['buildTag', 'buildStatus', 'buildTime', 'link'])
+  const validated = validate(ctx.querystring, ['buildTag', 'buildStatus', 'link'])
   if (!validated.ok) {
     logger.error(`${ctx.url} lack params: ${validated.lackedParams}`)
     ctx.status = 400
@@ -38,7 +39,8 @@ app.use(async (ctx, next) => {
   const subscriberIds = subBuffer.toString().split(',')
   const { buildTag, buildTime, buildStatus, link } = qs.parse(ctx.querystring)
   _.each(subscriberIds, async id => {
-    await bot.telegram.sendMessage(id, `${buildTag} (${buildStatus})\n${buildTime}\n${link}`)
+    const dateStr = moment().format('YYYY-MM-DD HH:mm:ss')
+    await bot.telegram.sendMessage(id, `${buildTag} (${buildStatus})\n${dateStr}\n${link}`)
   })
   await next()
 })
