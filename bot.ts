@@ -34,6 +34,9 @@ bot.command('sub', async ctx => {
   try {
     await ctx.reply('Welcome, this is PT-Jenkins telegram bot')
     const chat = await ctx.getChat();
+    if (!fs.existsSync(DATA_ROOT)) {
+      fs.mkdirSync(DATA_ROOT)
+    }
     await fs.appendFile(path.join(DATA_ROOT, 'subscribers'), chat.id)
   } catch(e) {
     logger.error(e)
