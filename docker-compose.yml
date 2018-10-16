@@ -5,6 +5,8 @@ services:
     build: .
     image: pt-jenkins
     container_name: 'pt-jenkins'
+    ports:
+      - 7123:7123
     volumes:
       - defaultLog:/app/logs
 
