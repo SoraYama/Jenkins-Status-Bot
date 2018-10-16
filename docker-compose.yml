@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  jenkins-bot:
+    build: .
+    image: pt-jenkins
+    container_name: 'pt-jenkins'
+    volumes:
+      - defaultLog:/app/logs
+
+volumes:
+  defaultLog:

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "es2015",
+      "esnext"
+    ],
+    "outDir": "./cache",
+    "typeRoots": [
+      "./typings",
+      "./node_modules/@types"
+    ],
+    "noImplicitAny": true,
+    "pretty": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "/node_modules"
+  ]
+}

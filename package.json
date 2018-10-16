@@ -1,0 +1,35 @@
+{
+  "name": "rss-bot",
+  "version": "0.0.1",
+  "description": "An telegram rss collector",
+  "main": "index.ts",
+  "author": "SoraYama",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "ts-node --transpileOnly index.ts",
+    "dev": "ts-node-dev --respawn --transpileOnly index.ts"
+  },
+  "dependencies": {
+    "koa": "^2.5.3",
+    "moment": "^2.22.2",
+    "rss-parser": "^3.5.2",
+    "socks-proxy-agent": "^4.0.1",
+    "telegraf": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^5.0.4",
+    "@types/koa": "^2.0.46",
+    "@types/lodash": "^4.14.117",
+    "@types/rss": "^0.0.28",
+    "@types/xml2js": "^0.4.3",
+    "dotenv": "^6.1.0",
+    "fs-extra": "^7.0.0",
+    "lodash": "^4.17.11",
+    "log4js": "^3.0.6",
+    "node": "^10.12.0",
+    "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.30",
+    "typescript": "^3.1.3"
+  }
+}
