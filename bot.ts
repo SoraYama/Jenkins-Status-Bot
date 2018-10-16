@@ -17,11 +17,11 @@ let bot: Telegraf<ContextMessageUpdate>
 assert(process.env.BOT_TOKEN, `No BOT_TOKEN env found! Set this env manually or in a '.env' file.`);
 
 const proxy = process.env.BOT_PROXY || ''
-logger.info('proxy: ', proxy)
 
 if (proxy) {
+  logger.info('proxy: ', proxy)
   const agent = new SocksAgent(proxy);
-   bot = new Telegraf(process.env.BOT_TOKEN!, {
+  bot = new Telegraf(process.env.BOT_TOKEN!, {
     telegram: {
       agent,
     }
