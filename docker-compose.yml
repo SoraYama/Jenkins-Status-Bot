@@ -9,6 +9,8 @@ services:
       - 7123:7123
     volumes:
       - defaultLog:/app/logs
+      - jenkinsData:/app/data
 
 volumes:
   defaultLog:
+  jenkinsData:
