@@ -9,7 +9,6 @@ export const validate = (queryString: string, neededStrings: string[]) => {
   const parsed = qs.parse(queryString)
   const lackedParams = _.filter(neededStrings, s => !_.has(parsed, s))
   const ok = _.every(neededStrings, s => _.has(parsed, s))
-  logger.debug(parsed, ok, lackedParams)
   return {
     ok,
     lackedParams,

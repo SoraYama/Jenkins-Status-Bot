@@ -1,12 +1,11 @@
 import Koa from 'koa'
 import log4js from './logger'
-import { validate, DATA_ROOT } from './utils'
+import { validate } from './utils'
 import bot from './bot'
-import fs from 'fs-extra'
-import path from 'path'
 import _ from 'lodash'
 import qs from 'querystring'
-import moment from 'moment'
+import moment from 'moment-timezone'
+import dataManager from './dataManager';
 
 const logger = log4js.getLogger('index')
 
@@ -17,8 +16,8 @@ app.on('error', err => {
 })
 
 app.use(async (ctx, next) => {
-  logger.info(`${ctx.method} ${ctx.url}`)
   await next()
+  logger.info(`${ctx.method} ${ctx.protocol} ${ctx.url} - ${ctx.response.get('X-Response-Time')}`)
 })
 
 app.use(async (ctx, next) => {
@@ -35,12 +34,18 @@ app.use(async (ctx, next) => {
     ctx.status = 400
     return
   }
-  const subBuffer = await fs.readFile(path.join(DATA_ROOT, 'subscribers'))
-  const subscriberIds = subBuffer.toString().split(',')
-  const { buildTag, buildTime, buildStatus, link } = qs.parse(ctx.querystring)
-  _.each(subscriberIds, async id => {
-    const dateStr = moment().format('YYYY-MM-DD HH:mm:ss')
-    await bot.telegram.sendMessage(id, `${buildTag} (${buildStatus})\n${dateStr}\n${link}`)
+  const subList = dataManager.subscriberList
+  const { buildTag, buildStatus, link } = qs.parse(ctx.querystring)
+  const filterdList = _.filter(
+    subList,
+    item => _.some(item.jobRegs, r => new RegExp(r, 'ig').test(buildTag as string))
+  )
+  const dateStr = moment.tz('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss')
+  _.each(filterdList, async sub => {
+    try {
+      await bot.telegram.sendMessage(sub.chatId, `${buildTag} (${buildStatus})\n${dateStr} CST\n${link}`)
+      logger.info(`sent msg to ${sub.chatId}`)
+    } catch (e) { logger.error(e) }
   })
   await next()
 })

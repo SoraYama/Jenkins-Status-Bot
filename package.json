@@ -8,11 +8,12 @@
   "private": true,
   "scripts": {
     "start": "ts-node --transpileOnly index.ts",
-    "dev": "ts-node-dev --respawn --transpileOnly index.ts"
+    "dev": "ts-node-dev --respawn --transpileOnly --no-notify index.ts"
   },
   "dependencies": {
     "koa": "^2.5.3",
     "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
     "rss-parser": "^3.5.2",
     "socks-proxy-agent": "^4.0.1",
     "telegraf": "^3.24.1"
@@ -21,6 +22,7 @@
     "@types/fs-extra": "^5.0.4",
     "@types/koa": "^2.0.46",
     "@types/lodash": "^4.14.117",
+    "@types/moment-timezone": "^0.5.9",
     "@types/rss": "^0.0.28",
     "@types/xml2js": "^0.4.3",
     "dotenv": "^6.1.0",
